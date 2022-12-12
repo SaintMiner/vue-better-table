@@ -1,0 +1,12 @@
+[
+  {
+    "name": "id",
+    "label": "ID",
+    "default": 0
+  },
+  {
+    "name": "name",
+    "label": "Name",
+    "searchable": true
+  }
+]
