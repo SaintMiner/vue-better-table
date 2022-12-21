@@ -1,10 +1,10 @@
 <template>
-	<div class="bg-white border rounded pt-4">
-		<div class="w-1/2" v-if="searchable">
+	<div class="bg-white border rounded">
+		<div class=" pb-4 m-auto mx-2 border-b pt-4" v-if="searchable">
 			<input
 				v-model="search"
 				type="text"
-				class="w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-200 focus:outline-none"
+				class="w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border-none rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-200 focus:outline-none"
 				placeholder="Search"
 			/>
 		</div>
@@ -12,10 +12,10 @@
 		<div>
 			<table class="w-full border-collapse table-auto text-sm">
 				<thead>
-					<tr>
+					<tr class="border-b">
 						<th
 							v-if="selectable"
-							class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-600 dark:text-slate-200 text-left"
+							class="font-medium p-4 text-slate-600 text-left"
 						>
 							<input
 								type="checkbox"
@@ -28,7 +28,7 @@
 						<th
 							v-for="column in columns"
 							:key="column.name"
-							class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-600 dark:text-slate-200 text-left"
+							class="font-medium p-4 text-slate-600 text-left"
 						>
 							{{ column.label }}
 						</th>
@@ -40,9 +40,9 @@
 						v-for="(row, index) in paginatedRows"
 						:key="row[keyColumn]"
 						@click="rowClick(row, index)"
-						class="hover:bg-gray-200"
+						class="hover:bg-gray-100"
 					>
-						<td class="p-4 pl-8 w-0" v-if="selectable">
+						<td class="p-4 w-0" v-if="selectable">
 							<input
 								type="checkbox"
 								class="rounded text-blue-400 border-blue-300 focus:ring-blue-200 disabled:border-slate-200 disabled:cursor-not-allowed"
@@ -59,7 +59,7 @@
 						<td
 							v-for="column in columns"
 							:key="column.name"
-							class="p-4 pl-8 border-b border-slate-100 dark:border-slate-700 text-slate-500 dark:text-slate-400"
+							class="p-4 border-slate-100 text-slate-500"
 						>
 							<slot
 								:name="column.name"
@@ -71,10 +71,11 @@
 							</slot>
 						</td>
 					</tr>
+					<!-- <tr><td class="p-4">a</td></tr> -->
 				</tbody>
 			</table>
 
-			<div class="p-4 pl-8 flex justify-between">
+			<div class="p-4 flex justify-between">
 				<div class="text-xs">{{ data?.length ?? 0 }} items</div>
 
 				<div class="flex" v-if="pagination">
@@ -245,6 +246,10 @@ export default {
 				this.$emit("update:modelValue", value);
 			},
 		},
+
+		search() {
+			this.page = 1;
+		}
 	},
 
 	methods: {

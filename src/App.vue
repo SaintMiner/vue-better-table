@@ -9,6 +9,7 @@
         :data-row-num="false"
         selectable
         pagination
+        :searchable="true"
         :paginationLimit="4"
         :objects-select="false"
         @rowClick="testRowClick"
