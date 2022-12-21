@@ -24,6 +24,7 @@
 								@click="toggleSelectAll"
 							/>
 						</th>
+
 						<th
 							v-for="column in columns"
 							:key="column.name"
@@ -33,9 +34,10 @@
 						</th>
 					</tr>
 				</thead>
+
 				<tbody>
 					<tr
-						v-for="(row, index) in rows"
+						v-for="(row, index) in paginatedRows"
 						:key="row[keyColumn]"
 						@click="rowClick(row, index)"
 						class="hover:bg-gray-200"
@@ -53,6 +55,7 @@
 								v-model="selectedRows"
 							/>
 						</td>
+
 						<td
 							v-for="column in columns"
 							:key="column.name"
@@ -70,6 +73,36 @@
 					</tr>
 				</tbody>
 			</table>
+
+			<div class="p-4 pl-8 flex justify-between">
+				<div class="text-xs">{{ data?.length ?? 0 }} items</div>
+
+				<div class="flex" v-if="pagination">
+					<button
+						@click="prevPage"
+						:disabled="this.page === 1"
+						data-tooltip-target="default-button-example-mobile-tooltip"
+						class="disabled:opacity-50 m-1 flex items-center p-1 text-xs font-medium text-gray-700 bg-white rounded-lg toggle-mobile-view enabled:hover:text-blue-700"
+					>
+						<fa icon="chevron-left" class="w-3 h-3" size="xs" />
+						<span> Prev </span>
+					</button>
+
+					<div class="text-xs m-auto mx-3">
+						{{ this.page }} / {{ this.pageCount }}
+					</div>
+
+					<button
+						@click="nextPage"
+						:disabled="this.page === this.pageCount"
+						data-tooltip-target="default-button-example-mobile-tooltip"
+						class="disabled:opacity-50 m-1 flex items-center p-1 text-xs font-medium text-gray-700 bg-white rounded-lg toggle-mobile-view enabled:hover:text-blue-700"
+					>
+						<span> Next </span>
+						<fa icon="chevron-right" class="w-3 h-3" size="xs" />
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -82,6 +115,7 @@ export default {
 
 	data() {
 		return {
+			page: 1,
 			selectedRows: [],
 			search: null,
 		};
@@ -93,6 +127,17 @@ export default {
 			required: false,
 			default: [],
 		},
+
+		pagination: {
+			type: Boolean,
+			required: false,
+		},
+		paginationLimit: {
+			type: Number,
+			default: 5,
+			required: false,
+		},
+
 		structure: {
 			type: Array,
 		},
@@ -146,6 +191,19 @@ export default {
 			return columns;
 		},
 
+		paginatedRows() {
+			let rows = this.rows;
+
+			if (this.pagination && this.paginationLimit > 0) {
+				rows = rows.slice(
+					this.paginationLimit * (this.page - 1),
+					this.paginationLimit * this.page
+				);
+			}
+
+			return rows;
+		},
+
 		rows() {
 			let rows = this.data ?? [];
 			if (this.dataRowNum) {
@@ -174,6 +232,10 @@ export default {
 
 			return rows;
 		},
+
+		pageCount() {
+			return Math.ceil(this.rows.length / this.paginationLimit);
+		},
 	},
 
 	watch: {
@@ -186,6 +248,16 @@ export default {
 	},
 
 	methods: {
+		nextPage() {
+			if (this.page < this.pageCount) {
+				this.page++;
+			}
+		},
+
+		prevPage() {
+			if (this.page > 1) this.page--;
+		},
+
 		toggleSelectAll() {
 			const isSelected =
 				this.selectableRows.length === this.selectedRows.length;

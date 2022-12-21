@@ -8,6 +8,8 @@
         :data="tableData"      
         :data-row-num="false"
         selectable
+        pagination
+        :paginationLimit="4"
         :objects-select="false"
         @rowClick="testRowClick"
       >
