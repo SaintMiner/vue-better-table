@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import BetterTable from "./components/BetterTable.vue";
+import { BetterTable } from "./components";
 import structure from './json/table-structure.json';
 import tableData from './json/table-data.json';
 
