@@ -1,6 +1,6 @@
 <template>
 	<div class="bg-white border rounded">
-		<div class=" pb-4 m-auto mx-2 border-b pt-4" v-if="searchable">
+		<div class="pb-4 m-auto mx-2 border-b pt-4" v-if="searchable">
 			<input
 				v-model="search"
 				type="text"
@@ -15,11 +15,11 @@
 					<tr class="border-b">
 						<th
 							v-if="selectable"
-							class="font-medium p-4 text-slate-600 text-left"
+							class="font-medium p-4 text-slate-600 text-left whitespace-nowrap"
 						>
 							<input
 								type="checkbox"
-								class="rounded text-blue-400 border-blue-300 focus:ring-blue-200 disabled:border-slate-200 disabled:cursor-not-allowed"
+								class="rounded text-blue-400 border-blue-300 focus:ring-blue-200 disabled:border-slate-200 disabled:cursor-not-allowed cursor-pointer"
 								:checked="selectedRows.length === selectableRows.length"
 								@click="toggleSelectAll"
 							/>
@@ -28,7 +28,7 @@
 						<th
 							v-for="column in columns"
 							:key="column.name"
-							class="font-medium p-4 text-slate-600 text-left"
+							class="font-medium p-4 text-slate-600 text-left whitespace-nowrap"
 						>
 							{{ column.label }}
 						</th>
@@ -45,7 +45,7 @@
 						<td class="p-4 w-0" v-if="selectable">
 							<input
 								type="checkbox"
-								class="rounded text-blue-400 border-blue-300 focus:ring-blue-200 disabled:border-slate-200 disabled:cursor-not-allowed"
+								class="rounded text-blue-400 border-blue-300 focus:ring-blue-200 disabled:border-slate-200 disabled:cursor-not-allowed cursor-pointer"
 								:value="objectsSelect ? row : row[keyColumn]"
 								:disabled="
 									objectsSelect
@@ -59,19 +59,25 @@
 						<td
 							v-for="column in columns"
 							:key="column.name"
+							:width="column.width"
 							class="p-4 border-slate-100 text-slate-500"
 						>
 							<slot
 								:name="column.name"
 								:value="row[column.name]"
 								:row="row"
+								:column="column"
 								:index="index"
 							>
-								{{ row[column.name] ?? column.default }}
+								<BTableBooleanCell v-if="column.type === 'boolean'"
+									:value="row[column.name]"
+								/>
+								<div v-else>
+									{{ row[column.name] ?? column.default }}
+								</div>
 							</slot>
 						</td>
 					</tr>
-					<!-- <tr><td class="p-4">a</td></tr> -->
 				</tbody>
 			</table>
 
@@ -109,8 +115,14 @@
 </template>
 
 <script>
+import BTableBooleanCell from './BTableBooleanCell.vue';
+
 export default {
 	name: "BetterTable",
+
+	components: {
+		BTableBooleanCell
+	},
 
 	emits: ["rowClick", "update:modelValue"],
 
@@ -249,7 +261,7 @@ export default {
 
 		search() {
 			this.page = 1;
-		}
+		},
 	},
 
 	methods: {

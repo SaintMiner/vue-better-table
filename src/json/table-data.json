@@ -1,7 +1,8 @@
 [
   {
     "id": 1,
-    "name": "Uno Sacry SaintoFia"
+    "name": "Uno Sacry SaintoFia",
+    "is_leader": true
   },
   {
     "id": 2,

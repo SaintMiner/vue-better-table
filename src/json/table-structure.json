@@ -2,11 +2,18 @@
   {
     "name": "id",
     "label": "ID",
-    "default": 0
+    "default": 0,
+    "width": 1
   },
   {
     "name": "name",
     "label": "Name",
     "searchable": true
+  },
+  {
+    "name": "is_leader",
+    "label": "Is leader",
+    "type": "boolean",
+    "width": 1
   }
 ]
