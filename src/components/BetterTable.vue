@@ -69,7 +69,8 @@
 								:column="column"
 								:index="index"
 							>
-								<BTableBooleanCell v-if="column.type === 'boolean'"
+								<BTableBooleanCell
+									v-if="column.type === 'boolean'"
 									:value="row[column.name]"
 								/>
 								<div v-else>
@@ -115,13 +116,23 @@
 </template>
 
 <script>
-import BTableBooleanCell from './BTableBooleanCell.vue';
+import BTableBooleanCell from "./BTableBooleanCell.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+	faChevronLeft,
+	faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faChevronLeft, faChevronRight);
 
 export default {
 	name: "BetterTable",
 
 	components: {
-		BTableBooleanCell
+		BTableBooleanCell,
+		fa: FontAwesomeIcon,
 	},
 
 	emits: ["rowClick", "update:modelValue"],

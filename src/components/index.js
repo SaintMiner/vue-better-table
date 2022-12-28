@@ -1,1 +1,8 @@
-export { default as BetterTable } from './BetterTable.vue'
+import '../style.css'
+
+import BetterTable from './BetterTable.vue'
+import BTableBooleanCell from './BTableBooleanCell.vue'
+
+export {
+  BetterTable, BTableBooleanCell
+}
