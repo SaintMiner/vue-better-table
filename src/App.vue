@@ -6,7 +6,7 @@
         name="Better table"
         :structure="structure" 
         :data="tableData"      
-        :data-row-num="false"
+        :data-row-num="true"
         selectable
         pagination
         :searchable="true"

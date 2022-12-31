@@ -208,6 +208,7 @@ export default {
 				columns = [
 					{
 						name: "data_row_num",
+						width: 1,
 						label: "#",
 					},
 				].concat(columns);
