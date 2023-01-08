@@ -3,6 +3,4 @@ import '../style.css'
 import BetterTable from './BetterTable.vue'
 import BTableBooleanCell from './BTableBooleanCell.vue'
 
-export {
-  BetterTable, BTableBooleanCell
-}
+export default BetterTable

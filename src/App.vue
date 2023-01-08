@@ -1,6 +1,7 @@
 <template>
   <div class="h-full flex items-center bg-gray-100">
     <div class="container mx-auto w-2/4">      
+      Selected: {{ selected }}
       <BetterTable 
         v-model="selected"
         name="Better table"
@@ -11,7 +12,7 @@
         pagination
         :searchable="true"
         :paginationLimit="4"
-        :objects-select="false"
+        :objects-select="true"
         @rowClick="testRowClick"
       >
         <template v-slot:name="{ value, index }">

@@ -197,7 +197,7 @@ export default {
 		selectableRows() {
 			return this.rows.filter((row) => {
 				return this.objectsSelect
-					? Object.keys(row).length === 0
+					? Object.keys(row).length !== 0
 					: row[this.keyColumn];
 			});
 		},
